@@ -14,7 +14,7 @@ CARD_MOUNT_POINT="/media/card"
 sudo sh -c "echo heartbeat > /sys/class/leds/led0/trigger"
 
 #Display Waiting storage message
-python /home/pi/little-backup-box/PythonLCD/display.py "Attente Stockage" "Veuillez inserer"
+python /home/pi/little-big-backup-box/PythonLCD/display.py "Attente Stockage" "Veuillez inserer"
 
 # Wait for a USB storage device (e.g., a USB flash drive)
 STORAGE=$(ls /dev/* | grep $STORAGE_DEV | cut -d"/" -f3)
@@ -36,7 +36,7 @@ STORAGEFREE=$(df -P /dev/sda1 | awk 'NR==2 {print $4}')
 
 #Display free space
 FREESPACEINGB=$(awk "BEGIN {printf \"%.2f\",${STORAGEFREE}/1000000}")
-python /home/pi/little-backup-box/PythonLCD/display.py "Libre $FREESPACEINGB Go" "Attente carte SD"
+python /home/pi/little-big-backup-box/PythonLCD/display.py "Libre $FREESPACEINGB Go" "Attente carte SD"
 sleep 3
 
 # Wait for a card reader or a camera
@@ -70,13 +70,13 @@ TRANSFERTAMOUNTGB=$(awk "BEGIN {printf \"%.2f\",${TRANSFERTAMOUNT}/1000000}")
 if (($STORAGEFREE < $TRANSFERTAMOUNT)); then
 sudo sh -c "echo 0 > /sys/class/leds/led0/brightness"
 #Display shutdown message
-python /home/pi/little-backup-box/PythonLCD/display.py "Stockage plein" "Extinction"
+python /home/pi/little-big-backup-box/PythonLCD/display.py "Stockage plein" "Extinction"
 sleep 10
 shutdown -h now
 fi
 
 #Display transfert message
-python /home/pi/little-backup-box/PythonLCD/display.py "${TRANSFERTAMOUNTGB} Go" "Transfert..."
+python /home/pi/little-big-backup-box/PythonLCD/display.py "${TRANSFERTAMOUNTGB} Go" "Transfert..."
   
 # Perform backup using rsync
 rsync -avh $CARD_MOUNT_POINT/ $BACKUP_PATH
@@ -85,7 +85,7 @@ rsync -avh $CARD_MOUNT_POINT/ $BACKUP_PATH
 sudo sh -c "echo 0 > /sys/class/leds/led0/brightness"
 
 #Display shutdown message
-python /home/pi/little-backup-box/PythonLCD/display.py "Transfert OK" "Extinction..."
+python /home/pi/little-big-backup-box/PythonLCD/display.py "Transfert OK" "Extinction..."
 sleep 2
 fi
 
