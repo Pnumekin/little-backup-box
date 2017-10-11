@@ -23,7 +23,7 @@ cd Adafruit_Python_CharLCD
 sudo python setup.py install
 
 
-crontab -l | { cat; echo "@reboot sudo /home/pi/little-backup-box/backup.sh > /home/pi/little-backup-box.log"; } | crontab
+crontab -l | { cat; echo "@reboot sudo /home/pi/little-big-backup-box/backup.sh > /home/pi/little-big-backup-box.log"; } | crontab
 
 echo "------------------------"
 echo "All done! Please reboot."
